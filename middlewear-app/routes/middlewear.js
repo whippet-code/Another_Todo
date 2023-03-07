@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-// function to check jwt token
+// function to check jwt token (verify if user is logged in or not  and if they have access to the route)
 const checkToken = (req, res, next) => {
   if (req.headers.token) {
     let token = req.headers.token;

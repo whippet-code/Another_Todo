@@ -5,6 +5,7 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+let todosRouter = require("./routes/todos");
 
 // set port unless already set via environment variable
 let PORT = 8080 || process.env.PORT;
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // import routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/todos", todosRouter);
 
 module.exports = app;
 app.listen(PORT, () => {
