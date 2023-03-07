@@ -54,6 +54,7 @@ router.post("/login", (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // return token to client - store token in local storage / global state for all future requests within the app whilst logged in
     res.status(200).json({ message: "Login successful", token });
   } else {
     res.status(401).json({ message: "Login failed" });
