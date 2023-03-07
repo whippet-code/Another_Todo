@@ -1,7 +1,13 @@
 var express = require("express");
 var router = express.Router();
 let jwt = require("jsonwebtoken");
-let { checkToken, changePassword } = require("../routes/middlewear");
+// import custom middlewear
+let {
+  checkToken,
+  changePassword,
+  checkUsername,
+  checkContentType,
+} = require("../routes/middlewear");
 
 // dummy user info
 const userInfo = {
@@ -55,9 +61,25 @@ router.post("/login", (req, res) => {
 });
 
 // PUT request to change user [password]
-router.put("/change-password", changePassword, (req, res) => {
+router.put("/change-password", changePassword, checkContentType, (req, res) => {
+  // This would update the DB
   userInfo.password = req.newUserPassword;
   res.status(200).json({ message: "Password changed" });
+});
+
+// POST request to create a new user
+router.post("/create-user", checkContentType, checkUsername, (req, res) => {
+  if (req.body.username && req.body.password === req.body.confirmPassword) {
+    // these would be saved to DB
+    userInfo.username = req.body.username;
+    userInfo.password = req.body.password;
+    res.status(200).json({ message: "User created" });
+  } else if (req.body.password !== req.body.confirmPassword) {
+    res.status(401).json({ message: "Passwords do not match" });
+  } else {
+    res.status(401).json({ message: "Username and password required" });
+  }
+  // Also need protection against duplicate usernames
 });
 
 module.exports = router;
