@@ -31,11 +31,20 @@ const todos = [
     description: "Todo 2 description",
     completed: true,
   },
+  {
+    username: "admin@gmail.com",
+    id: 3,
+    title: "Todo 3",
+    description: "Todo 3 description",
+    completed: false,
+  },
 ];
 
-/* GET users listing. using custom middlewear  */
+/* GET user todos route  */
 router.get("/", checkToken, function (req, res) {
-  res.send(JSON.stringify(todos));
+  // check todo username matches logged in user
+  let userTodos = todos.filter((todo) => todo.username === req.username);
+  res.send(JSON.stringify(userTodos));
 });
 
 // POST requ  to log user in returns a token
@@ -51,7 +60,7 @@ router.post("/login", (req, res) => {
         extra: "extra info",
       },
       "secretKey",
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
 
     // return token to client - store token in local storage / global state for all future requests within the app whilst logged in
