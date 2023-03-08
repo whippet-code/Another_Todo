@@ -49,8 +49,15 @@ router.put(
   changePassword,
   checkContentType,
   (req, res) => {
-    // find user in userInfo array and update password
-    userInfo.password = req.newUserPassword;
+    // find the user in the userInfo array
+    let userInfo = getUserInfo();
+    let user = userInfo.find((user) => user.username === req.username);
+    // if user is found, update password
+    if (user) {
+      user.password = req.body.newPassword;
+      //update userInfo file
+      fs.writeFileSync("./database/users.json", JSON.stringify(userInfo));
+    }
     res.status(200).json({ message: "Password changed" });
   }
 );
