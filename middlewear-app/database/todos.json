@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "username": "admin@gmail.com",
+    "title": "Admin todo 1",
+    "description": "Admin todo 1 description goes here."
+  },
+  {
+    "id": 2,
+    "username": "admin@gmail.com",
+    "title": "Admin todo 2",
+    "description": "Admin todo 2 description goes here."
+  },
+  {
+    "id": 3,
+    "username": "test@gmail.com",
+    "title": "Test todo 1",
+    "description": "Test todo 1 description goes here."
+  }
+]

@@ -48,5 +48,7 @@ router.get("/", checkToken, function (req, res) {
   res.send(JSON.stringify(userTodos));
 });
 
+// POST request to add a todo
+
 //export router
 module.exports = router;
