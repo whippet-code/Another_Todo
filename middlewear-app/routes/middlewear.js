@@ -101,6 +101,16 @@ function getUserInfo() {
   }
 }
 
+// function to load todosData from local file
+function getTodosData() {
+  try {
+    let todosData = fs.readFileSync("./database/todos.json");
+    return JSON.parse(todosData);
+  } catch (err) {
+    console.log(`ERROR Loading todos data: ${err}`);
+  }
+}
+
 //export the functions
 module.exports = {
   checkToken,
@@ -110,4 +120,5 @@ module.exports = {
   checkContentType,
   checkUser,
   getUserInfo,
+  getTodosData,
 };
