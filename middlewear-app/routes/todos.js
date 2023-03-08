@@ -69,5 +69,20 @@ router.put(
   }
 );
 
+// DELETE request to delete a todo
+// takes id from url
+router.delete("/:id", checkToken, (req, res) => {
+  // load todos.json file from local directory
+  let todos = getTodosData();
+  //get id from req.params, and remove that todo from the todos array
+  let todoid = parseInt(req.params.id);
+  // remove todo from todos array
+  todos = todos.filter((todo) => todo.id !== todoid);
+  // update todos.json file
+  fs.writeFileSync("./database/todos.json", JSON.stringify(todos));
+  // send response to client
+  res.status(200).json({ message: "Todo deleted" });
+});
+
 //export router
 module.exports = router;
