@@ -1,95 +1,81 @@
 var express = require("express");
 var router = express.Router();
 let jwt = require("jsonwebtoken");
+
+// require fs module to work with local files
+const fs = require("fs");
+
 // import custom middlewear
 let {
   checkToken,
   changePassword,
   checkUsername,
   checkContentType,
+  getUserInfo,
 } = require("../routes/middlewear");
 
-// dummy user info
-const userInfo = {
-  username: "test@gmail.com",
-  password: "123456",
-};
-
-// dummy todos for testing / setup
-const todos = [
-  {
-    username: "test@gmail.com",
-    id: 1,
-    title: "Todo 1",
-    description: "Todo 1 description",
-    completed: false,
-  },
-  {
-    username: "test@gmail.com",
-    id: 2,
-    title: "Todo 2",
-    description: "Todo 2 description",
-    completed: true,
-  },
-  {
-    username: "admin@gmail.com",
-    id: 3,
-    title: "Todo 3",
-    description: "Todo 3 description",
-    completed: false,
-  },
-];
-
-/* GET user todos route  */
-router.get("/", checkToken, function (req, res) {
-  // check todo username matches logged in user
-  let userTodos = todos.filter((todo) => todo.username === req.username);
-  res.send(JSON.stringify(userTodos));
-});
-
-// POST requ  to log user in returns a token
-router.post("/login", (req, res) => {
-  if (
-    req.body.username === userInfo.username &&
-    req.body.password === userInfo.password
-  ) {
-    let token = jwt.sign(
-      {
-        username: userInfo.username,
-        password: userInfo.password,
-        extra: "extra info",
-      },
-      "secretKey",
-      { expiresIn: "24h" }
-    );
-
-    // return token to client - store token in local storage / global state for all future requests within the app whilst logged in
-    res.status(200).json({ message: "Login successful", token });
+// POST request to log user in returns a token
+// takes username and password from body
+// itterate the userInfo array to find a match
+// if match is found, create a token and send it back to the client
+router.post("/login", checkContentType, (req, res) => {
+  let userInfo = getUserInfo();
+  // check if username and password match
+  // find the user in the userInfo array
+  let user = userInfo.find((user) => user.username === req.body.username);
+  // if user is found, check password
+  if (user) {
+    if (user.password === req.body.password) {
+      // create token
+      let token = jwt.sign(
+        { username: req.body.username, password: req.body.password },
+        "secretKey",
+        { expiresIn: "12h" }
+      );
+      // send token back to client
+      res.status(200).json({ message: "Login successful", token: token });
+    } else {
+      res.status(401).json({ message: "Incorrect password" });
+    }
   } else {
-    res.status(401).json({ message: "Login failed" });
+    res.status(401).json({ message: "User not found" });
   }
 });
 
 // PUT request to change user [password]
-router.put("/change-password", changePassword, checkContentType, (req, res) => {
-  // This would update the DB
-  userInfo.password = req.newUserPassword;
-  res.status(200).json({ message: "Password changed" });
-});
+router.put(
+  "/change-password",
+  checkToken,
+  changePassword,
+  checkContentType,
+  (req, res) => {
+    // find user in userInfo array and update password
+    userInfo.password = req.newUserPassword;
+    res.status(200).json({ message: "Password changed" });
+  }
+);
 
 // POST request to create a new user
 router.post("/create-user", checkContentType, checkUsername, (req, res) => {
-  if (req.body.username && req.body.password === req.body.confirmPassword) {
-    // these would be saved to DB
+  // first test to see if user already exists
+  // if user does not exist, create new user
+  if (req.body.username === userInfo.username) {
+    res.status(401).json({ message: "User already exists" });
+  } else if (
+    req.body.username &&
+    req.body.password === req.body.confirmPassword
+  ) {
+    // update userInfo file with new user info
     userInfo.username = req.body.username;
     userInfo.password = req.body.password;
+    userInfo.id = userInfo.id + 1;
+    // send response
     res.status(200).json({ message: "User created" });
   } else if (req.body.password !== req.body.confirmPassword) {
     res.status(401).json({ message: "Passwords do not match" });
   } else {
     res.status(401).json({ message: "Username and password required" });
   }
-  // Also need protection against duplicate usernames
 });
 
 module.exports = router;

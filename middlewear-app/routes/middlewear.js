@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
 
 // function to check jwt token (verify if user is logged in or not  and if they have access to the route)
 const checkToken = (req, res, next) => {
@@ -72,6 +73,34 @@ const checkContentType = (req, res, next) => {
   }
 };
 
+//function to search user.json file and confirm if passsed in user is a valid user
+const checkUser = (req, res, next) => {
+  // search userInfo json file for a match
+  let userInfo = getUserInfo();
+  let userExists = false;
+  userInfo.forEach((user) => {
+    if (user.username === req.body.username) {
+      userExists = true;
+    }
+  });
+  if (userExists) {
+    next();
+  } else {
+    res.status(401).json({ message: "User does not exist" });
+    next();
+  }
+};
+
+// get user data file from local directory
+function getUserInfo() {
+  try {
+    let userInfo = fs.readFileSync("./database/users.json");
+    return JSON.parse(userInfo);
+  } catch (err) {
+    console.log(`ERROR Loading users data: ${err}`);
+  }
+}
+
 //export the functions
 module.exports = {
   checkToken,
@@ -79,4 +108,6 @@ module.exports = {
   checkUsername,
   checkDescription,
   checkContentType,
+  checkUser,
+  getUserInfo,
 };
