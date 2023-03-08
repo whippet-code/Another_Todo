@@ -8,7 +8,6 @@ const checkToken = (req, res, next) => {
     jwt.verify(token, "secretKey", function (error, data) {
       if (error) {
         res.status(401).json({ message: "Invalid token" });
-        next();
       } else {
         req.username = data.username;
         req.password = data.password;
@@ -17,7 +16,6 @@ const checkToken = (req, res, next) => {
     });
   } else {
     res.status(401).json({ message: "Token not found" });
-    next();
   }
 };
 
@@ -31,10 +29,8 @@ const changePassword = (req, res, next) => {
     next();
   } else if (req.body.newPassword.length < 6) {
     res.status(401).json({ message: "Password must be at least 6 characters" });
-    next();
   } else {
     res.status(401).json({ message: "Passwords do not match" });
-    next();
   }
 };
 
@@ -45,7 +41,6 @@ const checkUsername = (req, res, next) => {
   let regex = /@gmail.com$/;
   if (!regex.test(req.body.username)) {
     res.status(403).json({ message: "Username must end in @gmail.com" });
-    next();
   } else {
     next();
   }
@@ -57,7 +52,6 @@ const checkDescription = (req, res, next) => {
     res
       .status(403)
       .json({ message: "Description must be less than 140 characters" });
-    next();
   } else {
     next();
   }
@@ -67,7 +61,6 @@ const checkDescription = (req, res, next) => {
 const checkContentType = (req, res, next) => {
   if (req.headers["content-type"] !== "application/json") {
     res.status(403).json({ message: "Content type must be application/json" });
-    next();
   } else {
     next();
   }
@@ -87,7 +80,6 @@ const checkUser = (req, res, next) => {
     next();
   } else {
     res.status(401).json({ message: "User does not exist" });
-    next();
   }
 };
 
