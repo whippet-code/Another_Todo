@@ -64,24 +64,25 @@ router.put(
 
 // POST request to create a new user
 router.post("/create-user", checkContentType, checkUsername, (req, res) => {
+  // load userInfo file
+  let userInfo = getUserInfo();
   // first test to see if user already exists
   // if user does not exist, create new user
-  if (req.body.username === userInfo.username) {
-    res.status(401).json({ message: "User already exists" });
-  } else if (
-    req.body.username &&
-    req.body.password === req.body.confirmPassword
-  ) {
-    // update userInfo file with new user info
-    userInfo.username = req.body.username;
-    userInfo.password = req.body.password;
-    userInfo.id = userInfo.id + 1;
-    // send response
+  let user = userInfo.find((user) => user.username === req.body.username);
+  if (!user) {
+    // create new user
+    let newUser = {
+      username: req.body.username,
+      password: req.body.password,
+      id: userInfo.length + 1,
+    };
+    // add new user to userInfo array
+    userInfo.push(newUser);
+    // update userInfo file
+    fs.writeFileSync("./database/users.json", JSON.stringify(userInfo));
     res.status(200).json({ message: "User created" });
-  } else if (req.body.password !== req.body.confirmPassword) {
-    res.status(401).json({ message: "Passwords do not match" });
   } else {
-    res.status(401).json({ message: "Username and password required" });
+    res.status(401).json({ message: "User already exists" });
   }
 });
 
