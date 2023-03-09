@@ -12,7 +12,7 @@ let {
   checkUsername,
   checkContentType,
   getUserInfo,
-} = require("../routes/middlewear");
+} = require("./middlewear");
 
 // POST request to log user in returns a token
 // takes username and password from body

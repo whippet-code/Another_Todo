@@ -11,7 +11,7 @@ let {
   checkDescription,
   checkToken,
   getTodosData,
-} = require("../routes/middlewear");
+} = require("./middlewear");
 
 /* GET todos route  */
 router.get("/", checkToken, function (req, res) {
