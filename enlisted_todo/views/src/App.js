@@ -8,14 +8,16 @@ import Welcome from "./components/Welcome";
 import TodoList from "./components/TodoList";
 
 function App() {
-  // conditional rendering depednig on if user is logged in or not (stored in state isLoggedIn)
+  // conditional rendering depending on if user is logged in or not (stored in state isLoggedIn)
   // if user is not logged in, display log in and sign up forms
   // if user is logged in, display that users todo list
+  // setting the token state from localstorage so that the user is logged in if they have a token in localstorage
   const [token, setToken] = useState(localStorage.getItem("token") || null);
 
   const handleLogOut = () => {
     // clear out the JWT token and localstorage, which will cause the user to be logged out
     setToken((prevState) => null);
+    // using local storage to store the token so need to clear it out when user logs out
     localStorage.removeItem("token");
   };
 

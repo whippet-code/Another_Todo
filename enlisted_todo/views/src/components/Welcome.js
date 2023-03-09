@@ -8,11 +8,11 @@ function Welcome(props) {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    console.log("username: ", username);
+    console.log(username);
   }, [username]);
 
   useEffect(() => {
-    console.log("password: ", password);
+    console.log(password);
   }, [password]);
 
   // make a fetch call to the server to log in and with returned token set state in App.js
@@ -29,7 +29,7 @@ function Welcome(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.token);
+        console.log(data.message);
         localStorage.setItem("token", data.token);
         props.setToken((prevState) => data.token);
       })
@@ -38,9 +38,26 @@ function Welcome(props) {
       });
   }
 
-  // make a fetch call to the server to register a new user. Notify user that account is created and prompt them to sign in
+  // make a fetch call to the server to register a new user. Notify user that account is created and sign them in
   function handleRegister() {
-    props.setToken((prevState) => "JWT Token");
+    fetch("http://localhost:8080/users/create-user", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        alert(`${data} -= Please Log In With new user details =-`);
+      })
+      .catch((err) => {
+        console.log(`Error Registering User: ${err}`);
+      });
   }
 
   function handleChange(e) {
@@ -51,10 +68,14 @@ function Welcome(props) {
     }
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <div className="welcome">
       <h3>Welcome to enlisted</h3>
-      <form className="signInForm">
+      <form className="signInForm" onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input type="text" name="username" onChange={handleChange} />
         <label htmlFor="password">Password</label>
