@@ -11,6 +11,11 @@ function Welcome(props) {
 
   // make a fetch call to the server to log in and with returned token set state in App.js
   function handleSignIn() {
+    //ensure form is filled in completely
+    if (!username || !password) {
+      return alert("Please fill out the form");
+    }
+    // make fetch call to the server to log in
     fetch("http://localhost:8080/users/login", {
       method: "POST",
       headers: {
@@ -40,6 +45,11 @@ function Welcome(props) {
 
   // make a fetch call to the server to register a new user. Notify user that account is created and sign them in
   function handleRegister() {
+    // ensure form is filled in completely
+    if (!username || !password) {
+      return alert("Please fill out the form");
+    }
+    //make fetch call to the server to register a new user
     fetch("http://localhost:8080/users/create-user", {
       method: "POST",
       headers: {
@@ -59,6 +69,7 @@ function Welcome(props) {
       });
   }
 
+  // track changes in input fields
   function handleChange(e) {
     if (e.target.name === "username") {
       setUsername((prevState) => e.target.value);
@@ -66,7 +77,8 @@ function Welcome(props) {
       setPassword((prevState) => e.target.value);
     }
   }
-
+  // handle submit function for the welcome form
+  // used to prevent defualt behavior of the form
   function handleSubmit(e) {
     e.preventDefault();
   }
