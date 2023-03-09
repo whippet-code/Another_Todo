@@ -1,11 +1,14 @@
-# JWT Auth, multi user todo app
+# Enlisted
 
-## Built using express.js, custom middlewear and React
+## JWT Auth, multi user todo app
 
-### Mark Ivkovic
+### Built using express.js, custom middlewear and React
+
+### By Mark Ivkovic
 
 #### Description
 
+A fun take on the standard todo list. Themed around a squad of todo's where each todo is "enlisted".
 This app utilises local file storage for the user and todo data, storged as JSON files.
 Upon launch the app allows users to login or register as a new user.
 Once logged in, users can view thir todos, add new todos and edit/delete existing todo notes (including mark as complete without deletion).
