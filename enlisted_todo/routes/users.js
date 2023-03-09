@@ -26,6 +26,7 @@ router.post("/login", checkContentType, (req, res) => {
   // if user is found, check password
   if (user) {
     if (user.password === req.body.password) {
+      console.log("User found and passwords match, generating token");
       // create token
       let token = jwt.sign(
         { username: req.body.username, password: req.body.password },
@@ -35,10 +36,12 @@ router.post("/login", checkContentType, (req, res) => {
       // send token back to client
       res.status(200).json({ message: "Login successful", token: token });
     } else {
-      res.status(401).json({ message: "Incorrect password" });
+      // setting token to null to prevent client from using it
+      res.status(401).json({ message: "Incorrect password", token: null });
     }
   } else {
-    res.status(401).json({ message: "User not found" });
+    // setting token to null to prevent client from using it
+    res.status(401).json({ message: "User not found", token: null });
   }
 });
 
