@@ -7,13 +7,7 @@ function Welcome(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    console.log(username);
-  }, [username]);
-
-  useEffect(() => {
-    console.log(password);
-  }, [password]);
+  useEffect(() => {}, [username, password]);
 
   // make a fetch call to the server to log in and with returned token set state in App.js
   function handleSignIn() {
@@ -30,11 +24,17 @@ function Welcome(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.message);
-        localStorage.setItem("token", data.token);
-        props.setToken((prevState) => data.token);
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          props.setToken((prevState) => data.token);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
+      })
+      .finally(() => {
+        setUsername((prevState) => "");
+        setPassword((prevState) => "");
       });
   }
 
@@ -52,11 +52,10 @@ function Welcome(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        alert(`${data} -= Please Log In With new user details =-`);
+        alert(`${data.message} -= Please Log In With new user details =-`);
       })
       .catch((err) => {
-        console.log(`Error Registering User: ${err}`);
+        alert(`Error Registering User: ${err}`);
       });
   }
 
