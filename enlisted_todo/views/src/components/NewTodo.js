@@ -37,8 +37,12 @@ function NewTodo(props) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.message);
+        // update the todo list state
+        props.setTodoList((prevState) => [...prevState, newTodo]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
