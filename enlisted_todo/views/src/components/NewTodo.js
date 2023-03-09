@@ -5,6 +5,7 @@ import { useState } from "react";
 function NewTodo(props) {
   // set up state for the new todo form
   const [newTodo, setNewTodo] = useState({
+    id: Date.now(),
     title: "",
     description: "",
     completed: false,
@@ -39,6 +40,13 @@ function NewTodo(props) {
         console.log(data.message);
         // update the todo list state
         props.setTodoList((prevState) => [...prevState, newTodo]);
+        // reset the new todo form
+        setNewTodo((prevState) => ({
+          id: Date.now(),
+          title: "",
+          description: "",
+          completed: false,
+        }));
       })
       .catch((err) => {
         console.log(err);

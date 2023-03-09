@@ -28,11 +28,11 @@ router.post("/", checkToken, checkContentType, checkDescription, (req, res) => {
   let todos = getTodosData();
   // create new todo object, for id create a date/time stamp, username is pulled from token
   let newTodo = {
-    id: Date.now(),
+    id: req.body.id,
     username: req.username,
     title: req.body.title,
     description: req.body.description,
-    completed: false,
+    completed: req.body.completed,
   };
   // add new todo to todos array
   todos.push(newTodo);
