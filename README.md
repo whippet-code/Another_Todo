@@ -15,8 +15,19 @@ Once logged in, users can view thir todos, add new todos and edit/delete existin
 
 #### Set-up
 
+Until this app is hosted, to run please clone this repo on your local machine, run npm install for both the express server and the react front end. Then start the server and react app, the server will run on port 8080, react on 3000.
+This will launch the app in a new browser tab.
+To use, either register as a new user (data stored locally), or log in with the following;
+user - admin@gmail.com
+password - admin
+
+From here the app works as most standard todo apps.
+Be sure to log out and close down both the servers running the app from terminal (CTRL+C)
+
 #### Future updates
 
 The backend will transition to mongoDB with mongoose working as the go between from the server.
 User passwords will be hashed both before requests are sent and within the database file system using bcrypt
 The api key for DB log in will be hidden/hashed, along with the secret key used in producing/verifying JWT signatures
+
+Todo's will be displayed in a 'most recently edited' way
