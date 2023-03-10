@@ -1,0 +1,28 @@
+/* Overall general styles */
+/* Colours- Prim #0077B5  Sec #6BB9F0 Acc1 #FF8C00 Acc2 #A8CC8C */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Source Code Pro', monospace;
+  color: #0077B5;
+}
+
+h1 {
+  font-size: 3rem;
+  text-decoration: overline;
+  text-decoration-color: #6bb9f0;
+}
+
+button {
+  cursor: pointer;
+}
+
+input {
+  cursor: pointer;
+}
+
+*:hover {
+  transition: ease-in-out 0.2s;
+}

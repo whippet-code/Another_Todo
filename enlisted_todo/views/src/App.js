@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>enlisted</h1>
+        <h1>A(nother)</h1>
         {token ? <button onClick={handleLogOut}>Log Out</button> : null}
       </header>
       <main>

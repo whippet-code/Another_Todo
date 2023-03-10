@@ -126,15 +126,21 @@ function Todo(props) {
     >
       <h3>{props.todo.title}</h3>
       <p>{props.todo.description}</p>
-      <button className="editButton" type="button" onClick={handleEdit}>
-        Edit
-      </button>
-      <button className="deleteButton" type="button" onClick={handleDelete}>
-        Delete
-      </button>
-      <button className="completeToggle" type="button" onClick={handleComplete}>
-        Complete
-      </button>
+      <div className="buttons">
+        <button className="editButton" type="button" onClick={handleEdit}>
+          Edit
+        </button>
+        <button className="deleteButton" type="button" onClick={handleDelete}>
+          Delete
+        </button>
+        <button
+          className="completeToggle"
+          type="button"
+          onClick={handleComplete}
+        >
+          Complete
+        </button>
+      </div>
     </div>
   );
 }
