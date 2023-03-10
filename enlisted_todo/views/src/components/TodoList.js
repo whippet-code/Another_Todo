@@ -34,7 +34,7 @@ function TodoList(props) {
       <NewTodo setTodoList={setTodoList} />
       <h3>Todo List</h3>
       {todoList.map((todo) => (
-        <Todo todo={todo} key={todo.id} />
+        <Todo todo={todo} key={todo.id} setTodoList={setTodoList} />
       ))}
     </div>
   );

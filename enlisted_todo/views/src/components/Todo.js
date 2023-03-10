@@ -22,8 +22,48 @@ function Todo(props) {
   const [todo, setTodo] = useState(props.todo);
 
   // create a function to handle the edit button
+  // use prompt to get new title and description
   function handleEdit() {
-    console.log("edit");
+    // get the new title and description from the user
+    const newTitle = prompt("Enter new title");
+    const newDescription = prompt("Enter new description");
+    //verify inputs and that description is less than 141 characters
+    if (!newTitle || !newDescription || newDescription.length > 140) {
+      return alert("Please enter a valid title and description");
+    }
+    // build new todo with new data for todo
+    const updatedTodo = {
+      id: todo.id,
+      title: newTitle,
+      description: newDescription,
+      completed: todo.completed,
+    };
+
+    // make fetch request to the server to update the todo in storage
+    fetch(`http://localhost:8080/todos/${todo.id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        token: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(updatedTodo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.message);
+        // update the todo list state
+        props.setTodoList((prevState) => {
+          const updatedList = prevState.map((todo) => {
+            if (todo.id === updatedTodo.id) {
+              return updatedTodo;
+            } else {
+              return todo;
+            }
+          });
+          return updatedList;
+        });
+      })
+      .catch((err) => console.log(err));
   }
 
   // create a function to handle the delete button
@@ -86,7 +126,6 @@ function Todo(props) {
     >
       <h3>{props.todo.title}</h3>
       <p>{props.todo.description}</p>
-      {props.todo.completed ? <p>Done</p> : <p>Todo</p>}
       <button className="editButton" type="button" onClick={handleEdit}>
         Edit
       </button>

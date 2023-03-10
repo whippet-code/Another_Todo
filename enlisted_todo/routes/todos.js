@@ -62,7 +62,7 @@ router.put(
       // update todos.json file
       fs.writeFileSync("./database/todos.json", JSON.stringify(todos));
       // send response to client
-      res.status(200).json({ message: "Todo updated" });
+      res.status(200).json({ message: "Todo updated", todo: { todo } });
     } else {
       res.status(404).json({ message: "Todo not found" });
     }

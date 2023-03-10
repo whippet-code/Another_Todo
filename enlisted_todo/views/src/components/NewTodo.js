@@ -54,10 +54,11 @@ function NewTodo(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="new-todo-form">
       <h3>New Todo</h3>
       <label htmlFor="title">Title</label>
       <input
+        className="title"
         type="text"
         name="title"
         value={newTodo.title}
@@ -65,12 +66,13 @@ function NewTodo(props) {
       />
       <label htmlFor="description">Description</label>
       <input
+        className="description"
         type="text"
         name="description"
         value={newTodo.description}
         onChange={handleChange}
       />
-      <input type="submit" value="Add Todo" />
+      <input className="submit-button" type="submit" value="Add Todo" />
     </form>
   );
 }
