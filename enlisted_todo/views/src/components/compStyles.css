@@ -168,4 +168,64 @@
 
 /* Welcome */
 .welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem;
 }
+
+.welcome h2 {
+  font-size: 2rem;
+  font-weight: 200;
+  color: #0077B5;
+  text-decoration: overline;
+}
+
+.signInForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 85vw;
+  margin: 1rem;
+  background-color: rgba(107, 185, 240, 0.1);
+  padding: 1rem;
+  border:1px solid #6bb9f066;
+  border-radius: 0.2rem;
+}
+
+.signInForm input {
+  width: 50vw;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 800;
+  border: none;
+  color: #0077B5;
+  background: rgba(0, 119, 181, 0.1);
+}
+
+.signInForm input:focus {
+  outline: none;
+}
+
+.welcome button {
+  background: #0077B5;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-weight: 400;
+}
+
+.welcome button:hover {
+  background: #6BB9F0;
+}
+

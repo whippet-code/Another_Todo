@@ -85,7 +85,7 @@ function Welcome(props) {
 
   return (
     <div className="welcome">
-      <h3>Welcome to enlisted</h3>
+      <h2>Welcome to a(nother) todo app</h2>
       <form className="signInForm" onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
         <input type="text" name="username" onChange={handleChange} />
