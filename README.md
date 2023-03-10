@@ -2,7 +2,7 @@
 
 ## JWT Auth, multi user todo app
 
-### Built using express.js, custom middlewear and React
+### Built using express.js, custom middleware and React
 
 ### By Mark Ivkovic
 
