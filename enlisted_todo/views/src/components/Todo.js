@@ -41,6 +41,10 @@ function Todo(props) {
         console.log(data.message);
       })
       .catch((err) => console.log(err));
+
+    // remove the todo item from the screen
+    const todoItem = document.getElementById(todo.id);
+    todoItem.remove();
   }
 
   // function of handle complete
