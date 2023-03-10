@@ -1,0 +1,22 @@
+/* Component styles */
+/* General */
+
+/* Todo */
+.todo {
+  background: antiquewhite;
+}
+.editButton {
+}
+.deleteButton {
+}
+.completeToggle {
+}
+
+.completed {
+  background: red;
+}
+/* NewTodo */
+
+/* TodoList */
+
+/* Welcome */

@@ -14,6 +14,9 @@
 
 import { useState } from "react";
 
+// import styles
+import "./compStyles.css";
+
 function Todo(props) {
   // load the props into state
   const [todo, setTodo] = useState(props.todo);
@@ -40,37 +43,55 @@ function Todo(props) {
       .catch((err) => console.log(err));
   }
 
-  // create a function to handle the checkbox
-  //upon clicking the checkbox, the todo item should toggle it's complete state and send the updated todo item to the server
-  function handleCheckbox() {
-    // toggle the complete state of the todo item
-    setTodo({
-      ...todo,
-      completed: !todo.completed,
-    });
-    // send the updated todo item to the server
+  // function of handle complete
+  // when clicked the todo item with toggle the complete value of the todo item
+  // also toggle a completed class to the todo item on screen
+  function handleComplete() {
     fetch(`http://localhost:8080/todos/${todo.id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
         token: localStorage.getItem("token"),
       },
-      body: JSON.stringify(todo),
+      body: JSON.stringify({
+        ...todo,
+        completed: !todo.completed,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data.message);
       })
       .catch((err) => console.log(err));
+
+    // toggle the completed value of the todo item
+    setTodo({
+      ...todo,
+      completed: !todo.completed,
+    });
+
+    // toggle the completed class on the todo item
+    const todoItem = document.getElementById(todo.id);
+    todoItem.classList.toggle("completed");
   }
 
   return (
-    <div className="todo">
+    <div
+      className={props.todo.completed ? "todo completed" : "todo"}
+      id={props.todo.id}
+    >
       <h3>{props.todo.title}</h3>
       <p>{props.todo.description}</p>
-      <button>Edit</button>
-      <button onClick={handleDelete}>Delete</button>
-      <input type="checkbox" onClick={handleCheckbox} />
+      {props.todo.completed ? <p>Done</p> : <p>Todo</p>}
+      <button className="editButton" type="button" onClick={handleEdit}>
+        Edit
+      </button>
+      <button className="deleteButton" type="button" onClick={handleDelete}>
+        Delete
+      </button>
+      <button className="completeToggle" type="button" onClick={handleComplete}>
+        Complete
+      </button>
     </div>
   );
 }
