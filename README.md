@@ -1,4 +1,4 @@
-# Enlisted
+# A(nother)
 
 ## JWT Auth, multi user todo app
 
@@ -10,7 +10,7 @@
 
 #### Description
 
-A fun take on the standard todo list. Themed around a squad of todo's where each todo is "enlisted".
+A tongue in cheek take on the standard todo list task. Yep, it's yet A(nother) todo list app.
 This app utilises local file storage for the user and todo data, storged as JSON files.
 Upon launch the app allows users to login or register as a new user.
 Once logged in, users can view thir todos, add new todos and edit/delete existing todo notes (including mark as complete without deletion).
